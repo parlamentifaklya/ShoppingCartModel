@@ -12,10 +12,11 @@
         public int ProductCount => _products.Count;
 
         //TODO Készítse el a ShoppingCart osztályban azokat a metódusokat, amelyekkel sikeresen lefutnak a tesztesetek!
-        public void AddProduct (string productName, double price)
+        public bool AddProduct (string productName, double price)
         {
             Product newProd = new(productName, price);
             _products.Add(newProd);
+            return true;
         }
 
         public bool RemoveProduct(string productName)
@@ -34,6 +35,11 @@
         public List<Product> GetProducts()
         {
             return _products;
+        }
+
+        public bool ProductAlreadyExists(string productName, double price)
+        {
+            return _products.Any(prod => prod.Name.Equals(productName, StringComparison.OrdinalIgnoreCase)) ? throw new InvalidOperationException("Product already exists.") : AddProduct(productName, price);
         }
     }
 }
